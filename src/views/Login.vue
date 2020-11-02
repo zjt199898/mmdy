@@ -20,14 +20,14 @@
         :rules="[{ required: true, message: '请填写密码' }]"
       />
       <div style="margin: 16px">
-        <van-button round block type="info" native-type="submit">
+        <van-button round block type="info" native-type="submit" color="#FF0000" size="20rem">
           登录
         </van-button>
       </div>
     </van-form>
     <div class="age">
       <div class="age-left">
-        <router-link :to="{ name: 'Reg' }">短信验证码登录</router-link>
+        <router-link></router-link>
       </div>
       <div class="age-right">
         <router-link :to="{ name: 'Reg' }">免费注册</router-link>

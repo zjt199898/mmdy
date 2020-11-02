@@ -29,7 +29,7 @@
         :rules="[{ required: true, message: '请填写密码' }]"
       />
       <div style="margin: 16px">
-        <van-button round block type="info" native-type="submit">
+        <van-button round block type="info" native-type="submit"  color="#FF0000" size="20rem">
           注册
         </van-button>
       </div>
@@ -77,7 +77,6 @@ export default {
           userName: this.username,
           password: this.password,
           avatar: this.avatar
- 
         });
         if (result.code === "success") {
           console.log(result.code);
