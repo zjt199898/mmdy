@@ -2,12 +2,12 @@
 <template>
   <div class="mine">
     我的
-      <hr/>
+    <hr />
     <van-image round width="4rem" height="4rem" :src="picture" />
-       <hr/>
+    <hr />
     <router-link :to="{ name: 'ChangeLogin' }">修改个人资料</router-link>
-    <hr/>
-    <router-link :to="{name:`Login`}" @click="loginout">退出登录</router-link>
+    <hr />
+    <button @click="loginOut">退出登录</button>
   </div>
 </template>
 
@@ -16,7 +16,6 @@
 //例如：import 《组件名称》 from '《组件路径》';
 // import { post } from "../untils/request";
 import { get } from "../untils/request";
-// import{loginOut}from "../untils/auth";
 
 export default {
   //import引入的组件需要注入到对象中才能使用
@@ -34,16 +33,11 @@ export default {
   watch: {},
   //方法集合
   methods: {
-    loginout(){
-      window.sessionStorage.clear()
-    //  const response=loginOut({
-    //    userName:this.userName,
-    //    password:this.password,
-    //  })
-    //  if(loginOut=true){
-    //    removeStore(this.userName)
-    //  }
-    }
+    loginOut() {
+      localStorage.removeItem("token")
+      console.log(localStorage.getItem("token"));
+      this.$router.push({ name: "Login" });
+    },
   },
   //生命周期 - 创建完成（可以访问当前this实例）
   created() {

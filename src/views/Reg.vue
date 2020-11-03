@@ -81,6 +81,7 @@ export default {
         if (result.code === "success") {
           console.log(result.code);
           localStorage.setItem("token", result.token);
+          console.log(localStorage.getItem("token"))
           this.$router.push({
             name: "Login",
           });
