@@ -5,3 +5,4 @@ export const regApi = (user) =>
 
 export const loginApi = (user) =>
     post("/api/v1/auth/login", user);
+

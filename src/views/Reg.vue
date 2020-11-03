@@ -66,9 +66,9 @@ export default {
       axios
         .post(" http://localhost:3009/api/v1/common/file_upload",formData)
         .then((res) => {
-          console.log(res)
-          this.avatar = res.data.info
-          this.img = [{url:'http://localhost:3009'+res.data.info, isImage: true}]
+          console.log(res);
+          this.avatar = res.data.info;
+          this.img = [{url:'http://localhost:3009'+res.data.info, isImage: true}];
         });
       },
     async onSubmit() {

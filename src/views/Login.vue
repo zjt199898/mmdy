@@ -66,7 +66,7 @@ export default {
       } else {
         Notify({
           type: "danger",
-          message: "result.message",
+          message: "密码错误",
         });
       }
     },
@@ -75,7 +75,8 @@ export default {
     get("/api/v1/users/info").then((res) => {
       console.log(res);
       this.picture = "http://localhost:3009" + res.avatar;
-      console.log(this.picture);
+      localStorage.setItem("userName",JSON.stringify(res.userName));
+      localStorage.setItem("avatar",JSON.stringify(res.avatar));
     });
   },
 };
