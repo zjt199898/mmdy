@@ -1,7 +1,7 @@
 <!--  -->
 <template>
 <div class='deta'>
-<div  v-for="item in list"
+<div  v-for="(item,i) in list"
 :key="item._id">
 <van-nav-bar
   :title="item.name"
@@ -22,7 +22,7 @@
 </div>
 <div class="cent">
 <span>{{item.name}}</span>
-<van-icon :name="cc" @click="showPopup"  ref="red" :class="fas?'aaa':'bbb'"/>
+<van-icon :name="cc" @click="fas?showPopup(item._id,item.name,i):dele(List[i]._id,i)"    :class="fas?'aaa':'bbb'"/>
 
 </div>
 <div >&nbsp;&nbsp;&nbsp;{{item.descriptions}}</div>
@@ -33,8 +33,12 @@
 <script>
 //这里可以导入其他文件（比如：组件，工具js，第三方插件js，json文件，图片文件等等）
 //例如：import 《组件名称》 from '《组件路径》';
+import { loadCarts } from "../services/carts";
 import axios from "axios"
 import { Toast } from 'vant'
+import { detCarts } from "../services/carts";
+import { addToCart } from "../services/carts";
+
 export default {
 //import引入的组件需要注入到对象中才能使用
 components: {},
@@ -42,8 +46,11 @@ data() {
 //这里存放数据
 return {
   list:[],
+  List:[],
+  listCook:{},
   fas:true,
   name:'',
+  Name:'',
   cc:"star-o",
   id:'',
    value: 3,
@@ -55,16 +62,23 @@ computed: {},
 watch: {},
 //方法集合
 methods: {
-  showPopup() {
+  //点击小星星亮，添加购物车
+  async showPopup(id,name) {
      if(this.fas){
        this.cc="star"
        Toast.success('收藏成功');
-     }else{
-       this.cc="star-o"
-       Toast.success('取消收藏成功');
+        const res = await addToCart(id, 1);
+      console.log(res);
+      if(res.code=="success"){
+        //存本地，根据电影名存储
+        this.listCook[name]=id
+        localStorage.setItem(name,JSON.stringify(this.listCook))
+      }
      }
      this.fas=!this.fas
+     location.reload() 
     },
+//获取详情
   dataList(){
     axios.get("http://localhost:3009/api/v1/products/"+this.id).then((res)=>{
       this.list.push(res.data)
@@ -74,16 +88,48 @@ methods: {
   onClickLeft(){
         window.history.go(-1)
     },
-  Colors(){
+    //点击小星星暗淡，删除购物车数据
+    async dele(id){
+      /* this.List.forEach((item,i)=>{
+        console.log(item,this.List[i]._id,id)
+        if(this.List[i]._id==id){
+         console.log(i)
+        }
+      }) */
+       const res = await detCarts(id);
+      console.log(res);
+     
+       this.cc="star-o"
+       Toast.success('取消收藏成功');       
+       //删除本地数据
+       localStorage.removeItem(this.Name)
+     
+     this.fas=!this.fas
+    },
+     async quList(){
+       const res = await loadCarts();
+       this.List=res
+       this.List.reverse()
+     }
+
+/*   Colors(){
     console.log(this.$refs.red)
     this.$refs.red.style.color="red"
-  }
+  } */
 },
 //生命周期 - 创建完成（可以访问当前this实例）
 created() {
   this.id=this.$route.query.id
-  console.log(this.id)
+  this.Name=this.$route.query.name
+  //console.log(this.id,this.Name)
+  //console.log(localStorage.getItem(this.Name))
   this.dataList()
+  this.quList()
+  //判断本地中是否有此电影的存储，如果有让星星亮起来，没有的话默认为没有收藏标志
+  if(localStorage.getItem(this.Name)!=null){
+    this.fas=false
+     this.cc="star"
+  }
 },
 //生命周期 - 挂载完成（可以访问DOM元素）
 mounted() {

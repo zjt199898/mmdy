@@ -1,4 +1,4 @@
-import { post, get } from "../utils/request";
+import { post, get, del } from "../untils/request";
 
 /**
  * 加入购物车
@@ -6,15 +6,19 @@ import { post, get } from "../utils/request";
  * @param {*} amount    数量
  */
 export function addToCart(product, amount) {
-  return post("/api/v1/shop_carts", {
-    product,
-    quantity: amount,
-  });
+    return post("http://localhost:3009/api/v1/shop_carts", {
+        product,
+        quantity: amount,
+    });
 }
 
 /**
  * 加载购物车数据
  */
 export function loadCarts() {
-  return get("/api/v1/shop_carts");
+    return get("http://localhost:3009/api/v1/shop_carts");
+}
+/* 删除数据 */
+export function detCarts(id) {
+    return del("http://localhost:3009/api/v1/shop_carts/" + id);
 }

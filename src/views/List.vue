@@ -27,7 +27,7 @@
   :desc="item.descriptions"
   :title="item.name"
   :thumb="item.coverImg"
-  :thumb-link="'/#/detail?id=' + item._id"
+  :thumb-link="'/#/detail?id=' + item._id+'&name='+item.name"
 />
 
  
