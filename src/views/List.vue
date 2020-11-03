@@ -71,7 +71,7 @@ methods: {
     console.log("A")
   }, */
     wan(){
-      axios.get("http://192.168.11.13/:3009/api/v1/products?page="+this.index*10+"&per="+this.unm).then((res)=>{
+      axios.get("http://localhost:3009/api/v1/products?page="+this.index*10+"&per="+this.unm).then((res)=>{
       //console.log(res.data.products)
       this.list=res.data.products
       //console.log(this.list)  
@@ -95,7 +95,7 @@ methods: {
       }, 2000);
     },
      ha(i){
-        axios.post("http://192.168.11.13:3009/api/v1/admin/products",{
+        axios.post("http://localhost:3009/api/v1/admin/products",{
     "quantity": 11,
     "price": 39,
     // "_id": this.list[i].albumId,
