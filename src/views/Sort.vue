@@ -88,6 +88,6 @@ export default {
 h2 {
   width: 100%;
   text-align: center;
-  color: aqua;
+  color: red;
 }
 </style>
