@@ -87,46 +87,22 @@ export default {
         });
     },
   },
-  adddm(){
-    axios.get("https://pcw-api.iqiyi.com/search/recommend/list?channel_id=4&data_type=1&mode=24&page_id=1&ret_num=30").then((res)=>{
-      //console.log(res.data.data.list)
-      this.list=res.data.data.list
-      //console.log(this.fas)    
-    })
+  //生命周期 - 创建完成（可以访问当前this实例）
+  created() {
+    this.adddy();
+    this.adddm();
+    //this.add()
   },
-  adddy(){
-    axios.get("https://pcw-api.iqiyi.com/search/recommend/list?channel_id=1&data_type=1&mode=11&page_id=1&ret_num=30").then((res)=>{
-      //console.log(res.data.data.list)
-      this.list=res.data.data.list
-      //console.log(this.fas)
-      
-    })
-      
-    
-  }
-},
-//生命周期 - 创建完成（可以访问当前this实例）
-created() {
-/*  if(this.fas){
-   this.adddy()
- }else{
-    this.adddm()
- } */
- this.adddy()
- this.adddm()
- //this.add()
-},
-//生命周期 - 挂载完成（可以访问DOM元素）
-mounted() {
-},
-beforeCreate() {}, //生命周期 - 创建之前
-beforeMount() {}, //生命周期 - 挂载之前
-beforeUpdate() {}, //生命周期 - 更新之前
-updated() {}, //生命周期 - 更新之后
-beforeDestroy() {}, //生命周期 - 销毁之前
-destroyed() {}, //生命周期 - 销毁完成
-activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
-}
+  //生命周期 - 挂载完成（可以访问DOM元素）
+  mounted() {},
+  beforeCreate() {}, //生命周期 - 创建之前
+  beforeMount() {}, //生命周期 - 挂载之前
+  beforeUpdate() {}, //生命周期 - 更新之前
+  updated() {}, //生命周期 - 更新之后
+  beforeDestroy() {}, //生命周期 - 销毁之前
+  destroyed() {}, //生命周期 - 销毁完成
+  activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
+};
 </script>
 <style  scoped>
 img {
