@@ -10,9 +10,19 @@
   @click-left="onClickLeft"
 />
 <img :src="item.coverImg" alt="">
+<div class="pin">
+<span>评分：</span>
+<van-rate
+  v-model="value"
+  :size="25"
+  color="#ffd21e"
+  void-icon="star"
+  void-color="#eee"
+/>
+</div>
 <div class="cent">
 <span>{{item.name}}</span>
-<van-icon name="star-o" @click="showPopup"  ref="red"/>
+<van-icon :name="cc" @click="showPopup"  ref="red" :class="fas?'aaa':'bbb'"/>
 
 </div>
 <div >&nbsp;&nbsp;&nbsp;{{item.descriptions}}</div>
@@ -32,8 +42,11 @@ data() {
 //这里存放数据
 return {
   list:[],
+  fas:true,
   name:'',
+  cc:"star-o",
   id:'',
+   value: 3,
 };
 },
 //监听属性 类似于data概念
@@ -43,10 +56,17 @@ watch: {},
 //方法集合
 methods: {
   showPopup() {
-     Toast.success('添加成功');
+     if(this.fas){
+       this.cc="star"
+       Toast.success('收藏成功');
+     }else{
+       this.cc="star-o"
+       Toast.success('取消收藏成功');
+     }
+     this.fas=!this.fas
     },
   dataList(){
-    axios.get("http://192.168.11.13:3009/api/v1/products/"+this.id).then((res)=>{
+    axios.get("http://localhost:3009/api/v1/products/"+this.id).then((res)=>{
       this.list.push(res.data)
       console.log(this.list)
     })
@@ -99,8 +119,15 @@ img{
 }
 .van-icon{
   font-size: 24px;
- color: orange;
+ /* color: orange; */
   margin-right: 15px;
+}
+.aaa{
+color: orange;
+}
+.bbb{
+  font-weight: bold;
+  color: red;
 }
 div{
   color: green;
@@ -119,5 +146,14 @@ div{
   color: red;
   text-align: center;
   line-height: 200px;
+}
+.pin{
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.pin span{
+  color: crimson;
+  font-weight: bold;
 }
 </style>
