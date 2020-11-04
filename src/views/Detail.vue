@@ -1,6 +1,9 @@
 <!--  -->
 <template>
-<div class='deta'>
+<div class='deta'  @click.self="dl()">
+<div class="po"><img :src="srcImg" alt="">
+<span>{{username}}</span>
+</div>
 <div  v-for="(item,i) in list"
 :key="item._id">
 <van-nav-bar
@@ -33,7 +36,7 @@
 <script>
 //这里可以导入其他文件（比如：组件，工具js，第三方插件js，json文件，图片文件等等）
 //例如：import 《组件名称》 from '《组件路径》';
-import { loadCarts } from "../services/carts";
+import { loadCarts,loadUser } from "../services/carts";
 import axios from "axios"
 import { Toast } from 'vant'
 import { detCarts } from "../services/carts";
@@ -53,7 +56,9 @@ return {
   Name:'',
   cc:"star-o",
   id:'',
-   value: 3,
+  value: 3,
+  srcImg:'',
+  username:'',
 };
 },
 //监听属性 类似于data概念
@@ -62,8 +67,37 @@ computed: {},
 watch: {},
 //方法集合
 methods: {
+  /* 获取用户信息,查看用户有没有登录,如果登录了跳转到个人中心，没有的话跳转到登录页面*/
+   dl(){
+     if(localStorage.getItem("token")){
+       location.href="/#/mine"
+     }else{
+       location.href="/#/login"
+     }
+   },
+   /* 获取用户信息 //查看用户有没有登录*/
+ async userName(){
+    if(localStorage.getItem("token")){
+      const res = await loadUser();
+     //console.log(res);
+     this.srcImg='http://localhost:3009'+res.avatar
+     this.username=res.userName
+     //console.log(this.srcImg)     
+      }else{
+         this.srcImg="../assets/2.jpg"
+         this.username="登录"        
+      }
+ },
   //点击小星星亮，添加购物车
   async showPopup(id,name) {
+    //判断用户有没有登录，没有登录跳转到登录页面
+    if(!localStorage.getItem("token")){
+      Toast.success('您还没有登录！请登录')
+      setTimeout(()=>{
+        location.href="/#/login"
+      },2000)
+      return
+    }
      if(this.fas){
        this.cc="star"
        Toast.success('收藏成功');
@@ -76,7 +110,7 @@ methods: {
       }
      }
      this.fas=!this.fas
-     location.reload();
+     //location.reload();
     },
 //获取详情
   dataList(){
@@ -86,16 +120,11 @@ methods: {
     })
   },
   onClickLeft(){
-        window.history.go(-1)
+        //window.history.go(-1)
+        location.href="/#/list"
     },
     //点击小星星暗淡，删除购物车数据
     async dele(id){
-      /* this.List.forEach((item,i)=>{
-        console.log(item,this.List[i]._id,id)
-        if(this.List[i]._id==id){
-         console.log(i)
-        }
-      }) */
        const res = await detCarts(id);
       console.log(res);
      
@@ -106,10 +135,15 @@ methods: {
      
      this.fas=!this.fas
     },
+    /* 判断用户有没有登录，登录的话，获取购物车数据 */
      async quList(){
-       const res = await loadCarts();
-       this.List=res
-       this.List.reverse()
+       if(localStorage.getItem("token")){
+         const res = await loadCarts();
+         this.List=res
+         this.List.reverse()
+         console.log(this.List)
+       }
+      /*  this.List.reverse() */
        //console.log(localStorage.getItem("token"))
        //localStorage.removeItem("token")
      }
@@ -123,10 +157,11 @@ methods: {
 created() {
   this.id=this.$route.query.id
   this.Name=this.$route.query.name
-  //console.log(this.id,this.Name)
-  //console.log(localStorage.getItem(this.Name))
+  console.log(this.id,this.Name)
+  console.log(localStorage.getItem(this.Name))
   this.dataList()
   this.quList()
+  this.userName()
   //判断本地中是否有此电影的存储，如果有让星星亮起来，没有的话默认为没有收藏标志
   if(localStorage.getItem(this.Name)!=null){
     this.fas=false
@@ -203,5 +238,25 @@ div{
 .pin span{
   color: crimson;
   font-weight: bold;
+}
+.po{
+  display: flex;
+  width: 80px;
+  align-items: center;
+  position: absolute;
+  z-index: 100;
+  top: 10px;
+  right: 0;
+}
+.po img{
+  display: block;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+.po span{
+  color: red;
+  font-size: 14px;
+  margin-left: 10px;
 }
 </style>

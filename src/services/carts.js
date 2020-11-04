@@ -22,3 +22,7 @@ export function loadCarts() {
 export function detCarts(id) {
     return del("http://localhost:3009/api/v1/shop_carts/" + id);
 }
+/* 获取用户信息 */
+export function loadUser() {
+    return get("http://localhost:3009/api/v1/users/info");
+}

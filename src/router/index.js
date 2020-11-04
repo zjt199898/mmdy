@@ -7,67 +7,71 @@ import { isLogined } from "../untils/tools";
 Vue.use(VueRouter)
 
 const routes = [{
-    path: '/',
-    name: 'Home',
-    component: Home
-},
-{
-    path: '/sort',
-    name: 'Sort',
-    component: () =>
-        import('../views/Sort.vue')
-},
-{
-    path: '/movie',
-    name: 'Movie',
-    component: () =>
-        import('../views/Movie.vue')
-},
-{
-    path: '/detail',
-    name: 'Detail',
-    component: () =>
-        import('../views/Detail.vue')
-},
-{
-    path: '/mine',
-    name: 'Mine',
-    component: () =>
-        import('../views/Mine.vue'),
-    meta: {
-        needLogin: true,
-    }
-},
-{
-    path: '/list',
-    name: 'List',
-    component: () =>
-        import('../views/List.vue')
-},
-{
-    path: '/reg',
-    name: 'Reg',
-    component: () =>
-        import('../views/Reg.vue')
-},
-{
-    path: '/login',
-    name: 'Login',
-    component: () =>
-        import('../views/Login.vue')
-},
-{
-    path: '/changelogin',
-    name: 'ChangeLogin',
-    component: () =>
-        import('../views/ChangeLogin.vue')
-},
-{
-    path: '/changepass',
-    name: 'ChangePass',
-    component: () =>
-        import('../views/ChangePass.vue')
-},
+        path: '/',
+        name: 'Home',
+        component: Home
+    },
+    {
+        path: '/sort',
+        name: 'Sort',
+        component: () =>
+            import ('../views/Sort.vue')
+    },
+    {
+        path: '/movie',
+        name: 'Movie',
+        component: () =>
+            import ('../views/Movie.vue'),
+        meta: {
+            needLogin: true,
+        },
+    },
+    {
+        path: '/detail',
+        name: 'Detail',
+        component: () =>
+            import ('../views/Detail.vue')
+    },
+    {
+        path: '/mine',
+        name: 'Mine',
+        component: () =>
+            import ('../views/Mine.vue'),
+        meta: {
+            needLogin: true,
+        }
+    },
+    {
+        path: '/list',
+        name: 'List',
+        component: () =>
+            import ('../views/List.vue')
+    },
+    {
+        path: '/reg',
+        name: 'Reg',
+        component: () =>
+            import ('../views/Reg.vue'),
+
+    },
+    {
+        path: '/login',
+        name: 'Login',
+        component: () =>
+            import ('../views/Login.vue')
+    },
+    {
+        path: '/changelogin',
+        name: 'ChangeLogin',
+        component: () =>
+            import ('../views/ChangeLogin.vue')
+    },
+    {
+        path: '/changepass',
+        name: 'ChangePass',
+        component: () =>
+            import ('../views/ChangePass.vue')
+    },
 ]
 
 const router = new VueRouter({

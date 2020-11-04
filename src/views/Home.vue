@@ -6,11 +6,14 @@
         <img :src="image" />
       </van-swipe-item>
     </van-swipe>
-    <h3>最新</h3>
-    <h2>{{ option1.value }}</h2>
-    <van-dropdown-menu>
-      <van-dropdown-item v-model="value1" :options="option1" @change="aaa" />
-    </van-dropdown-menu>
+    <ul class="list">
+    <li :class="fass?'aa':''" @click="adddy()">电影</li>
+    <li @click="adddm()">动漫</li>
+    <li @click="adddj()">纪录片</li>
+    <li @click="adddx()">游戏</li>
+    <li @click="adddz()">综艺</li>
+    <li @click="adddw()">网络电影</li>
+    </ul>
     <van-card
       v-for="item in list"
       :key="item.albumId"
@@ -32,12 +35,9 @@ export default {
   data() {
     //这里存放数据
     return {
+      fass:true,
       fas: true,
       value1: 0,
-      option1: [
-        { text: "电影", value: 0 },
-        { text: "动漫", value: 1 },
-      ],
       list: [],
       images: [
         "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=136213459,495588707&fm=26&gp=0.jpg",
@@ -53,48 +53,73 @@ export default {
   watch: {},
   //方法集合
   methods: {
-    aaa() {
-      this.fas = !this.fas;
-      location.reload();
-    },
-    add() {
-      if (this.fas) {
-        this.adddm();
-      } else {
-        this.adddy();
-      }
-    },
     adddm() {
+      this.fass=false
       axios
         .get(
-          "https://pcw-api.iqiyi.com/search/recommend/list?channel_id=4&data_type=1&mode=24&page_id=1&ret_num=10"
+          "https://pcw-api.iqiyi.com/search/recommend/list?channel_id=4&data_type=1&mode=24&page_id=1&ret_num=30"
         )
         .then((res) => {
-          console.log(res.data.data.list);
           this.list = res.data.data.list;
-          console.log(this.fas);
         });
     },
     adddy() {
+      
       axios
         .get(
-          "https://pcw-api.iqiyi.com/search/recommend/list?channel_id=1&data_type=1&mode=11&page_id=1&ret_num=10"
+          "https://pcw-api.iqiyi.com/search/recommend/list?channel_id=1&data_type=1&mode=11&page_id=1&ret_num=30"
         )
         .then((res) => {
-          console.log(res.data.data.list);
           this.list = res.data.data.list;
-          console.log(this.fas);
         });
     },
+    adddj(){
+      this.fass=false
+      axios.get(
+          "https://pcw-api.iqiyi.com/search/recommend/list?channel_id=3&data_type=1&mode=24&page_id=1&ret_num=48"
+        )
+        .then((res) => {
+          this.list = res.data.data.list;
+        });
+    },
+    adddx(){
+      this.fass=false
+      axios.get(
+          "https://pcw-api.iqiyi.com/search/recommend/list?channel_id=8&data_type=1&mode=24&page_id=1&ret_num=48"
+        )
+        .then((res) => {
+          this.list = res.data.data.list;
+        });
+    },
+    adddz(){
+      this.fass=false
+      axios.get(
+          "https://pcw-api.iqiyi.com/search/recommend/list?channel_id=6&data_type=1&mode=24&page_id=1&ret_num=48"
+        )
+        .then((res) => {
+          this.list = res.data.data.list;
+        });
+    },
+    adddw(){
+      this.fass=false
+      axios.get(
+          "https://pcw-api.iqiyi.com/search/recommend/list?channel_id=1&data_type=1&mode=24&page_id=1&ret_num=48"
+        )
+        .then((res) => {
+          this.list = res.data.data.list;
+        });
+    }
   },
   //生命周期 - 创建完成（可以访问当前this实例）
   created() {
     this.adddy();
-    this.adddm();
+    //this.adddm();
     //this.add()
   },
   //生命周期 - 挂载完成（可以访问DOM元素）
-  mounted() {},
+  mounted() {
+     
+  },
   beforeCreate() {}, //生命周期 - 创建之前
   beforeMount() {}, //生命周期 - 挂载之前
   beforeUpdate() {}, //生命周期 - 更新之前
@@ -111,5 +136,26 @@ img {
 }
 h3 {
   color: brown;
+}
+.list{
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.list li{
+  list-style: none;
+  flex: 1;
+  font-size: 14px;
+  text-align: center;
+  height: 20px;
+ 
+}
+.list li:hover{
+  color: red;
+   border-bottom: 2px solid blue;
+}
+.aa{
+  color: red;
+   border-bottom: 2px solid blue;
 }
 </style>

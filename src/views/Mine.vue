@@ -66,7 +66,6 @@ export default {
 .mine {
   display: flex;
   flex-direction: column;
-  /* position: relative; */
 }
 .header {
   height: 180px;

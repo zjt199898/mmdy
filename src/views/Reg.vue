@@ -62,7 +62,7 @@ export default {
       repwd: "",
       nickName:"",
       avatar: '',
-      img:[]
+      img:[],
     };
   },
   methods: {

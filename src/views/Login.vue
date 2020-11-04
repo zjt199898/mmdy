@@ -1,7 +1,12 @@
 <template>
   <div class="login">
     <div class="img">
-      <van-image round width="6rem" height="6rem" :src="picture" />
+      <div v-if="r">
+          <van-image round width="6rem" height="6rem" src="https://img.yzcdn.cn/vant/cat.jpeg"/>
+      </div>
+      <div v-else>
+          <van-image round width="6rem" height="6rem" :src="picture" />
+      </div>
     </div>
     <van-form @submit="onSubmit">
       <van-field
@@ -54,6 +59,7 @@ export default {
       username: "",
       password: "",
       picture: "",
+      r:true,
     };
   },
   methods: {
@@ -86,6 +92,7 @@ export default {
       localStorage.setItem("userName", res.userName);
       localStorage.setItem("passward", res.password);
       localStorage.setItem("nickName", res.nickName);
+      this.r=false;
     });
   },
 };

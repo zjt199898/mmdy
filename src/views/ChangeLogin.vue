@@ -26,9 +26,7 @@
         name="昵称"
         label="昵称"
         placeholder="昵称"
-        :rules="[
-          { required: true, message: '请填写用昵称', trigger: 'blur' }
-        ]"
+        :rules="[{ required: true, message: '请填写用昵称', trigger: 'blur' }]"
       />
       <div style="margin: 16px">
         <van-button
@@ -51,7 +49,8 @@
 </template>
 
 <script>
-import { post, get } from "../untils/request";
+import { post } from "../untils/request";
+import { get } from "../untils/request";
 import axios from "axios";
 import { Toast } from "vant";
 
@@ -87,7 +86,9 @@ export default {
         .then((res) => {
           console.log(res);
           this.avatar = res.data.info;
-          this.img = [{ url: "http://localhost:3009" + res.data.info, isImage: true }];
+          this.img = [
+            { url: "http://localhost:3009" + res.data.info, isImage: true },
+          ];
         });
     },
     //修改昵称
