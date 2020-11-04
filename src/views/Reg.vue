@@ -12,6 +12,13 @@
         placeholder="用户名"
         :rules="[{ required: true, message: '请填写用户名' }]"
       />
+        <van-field
+        v-model="nickName"
+        name="昵称"
+        label="昵称"
+        placeholder="昵称"
+        :rules="[{ required: true, message: '请填写用昵称' }]"
+      />
       <van-field
         v-model="password"
         type="password"
@@ -53,6 +60,7 @@ export default {
       username: "",
       password: "",
       repwd: "",
+      nickName:"",
       avatar: '',
       img:[]
     };
@@ -76,7 +84,8 @@ export default {
         const result = await regApi({
           userName: this.username,
           password: this.password,
-          avatar: this.avatar
+          avatar:this.avatar,
+          nickName:this.nickName
         });
         if (result.code === "success") {
           console.log(result.code);

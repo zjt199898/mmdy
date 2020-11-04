@@ -28,7 +28,6 @@ v-for="(item,i) in List"
 //import axios from "axios"
 import { loadCarts } from "../services/carts";
 import { detCarts } from "../services/carts";
-//import { Toast } from 'vant'
 
 export default {
 //import引入的组件需要注入到对象中才能使用

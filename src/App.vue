@@ -3,10 +3,10 @@
 <div id="app">
     <router-view class="content" />
     <van-tabbar v-model="active" route :fixed="false">
-  <van-tabbar-item icon="home-o" to="/">首页</van-tabbar-item>
-  <van-tabbar-item icon="search" to="/sort">分类</van-tabbar-item>
-  <van-tabbar-item icon="friends-o"  to="/movie">影库</van-tabbar-item>
-  <van-tabbar-item icon="manager-o" to="/mine">我的</van-tabbar-item>
+  <van-tabbar-item icon="home-o" :to="{name:'Home'}">首页</van-tabbar-item>
+  <van-tabbar-item icon="search" :to="{name:'Sort'}">分类</van-tabbar-item>
+  <van-tabbar-item icon="friends-o"  :to="{name:'Movie'}">影库</van-tabbar-item>
+  <van-tabbar-item icon="manager-o" :to="{name:'Mine'}">我的</van-tabbar-item>
 </van-tabbar>
   </div>
 </template>

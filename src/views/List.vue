@@ -8,7 +8,6 @@
   @click-left="onClickLeft"
 />
 
-
 <div class="ten">
 <input type="text" class="txt" placeholder="请输入电影名" v-model="txt"/>
 </div>

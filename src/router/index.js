@@ -62,6 +62,12 @@ const routes = [{
     component: () =>
         import('../views/ChangeLogin.vue')
 },
+{
+    path: '/changepass',
+    name: 'ChangePass',
+    component: () =>
+        import('../views/ChangePass.vue')
+},
 ]
 
 const router = new VueRouter({
