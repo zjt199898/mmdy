@@ -1,13 +1,14 @@
 <!--  -->
 <template>
 <div id="app">
-    <router-view class="content" />
+    <router-view class="content" ref="app" />
     <van-tabbar v-model="active" route :fixed="false">
   <van-tabbar-item icon="home-o" to="/">首页</van-tabbar-item>
   <van-tabbar-item icon="search" to="/sort">分类</van-tabbar-item>
   <van-tabbar-item icon="friends-o"  to="/movie">影库</van-tabbar-item>
   <van-tabbar-item icon="manager-o" to="/mine">我的</van-tabbar-item>
 </van-tabbar>
+<button class="btn" v-if="fas" @click="sct">回到顶部</button>
   </div>
 </template>
 
@@ -20,6 +21,7 @@ components: {},
 data() {
 //这里存放数据
 return {
+  fas:false,
   active: 0,
 };
 },
@@ -29,15 +31,36 @@ computed: {},
 watch: {},
 //方法集合
 methods: {
-
+  /* 获取滚动的距离 */
+  handleScroll () {
+  var scrollTop = this.$refs.app.$el.scrollTop
+  console.log(scrollTop)
+  if(scrollTop>1000){
+    this.fas=true
+  }else{
+    this.fas=false
+  }
+},
+sct(){
+  /*  if(this.$refs.app.$el.scrollTop>0){
+     var int=setTimeout(()=>{
+      this.$refs.app.$el.scrollTop-=30
+     },30)
+   }else{
+     clearInterval(int)
+   } */
+   this.$refs.app.$el.scrollTop=0
+}
 },
 //生命周期 - 创建完成（可以访问当前this实例）
 created() {
 
 },
 //生命周期 - 挂载完成（可以访问DOM元素）
-mounted() {
 
+mounted () {
+  window.addEventListener('scroll', this.handleScroll, true)
+  //window.addEventListener('scroll', this.sct, true)
 },
 beforeCreate() {}, //生命周期 - 创建之前
 beforeMount() {}, //生命周期 - 挂载之前
@@ -65,5 +88,9 @@ body,
   flex: 1;
   overflow: auto;
 }
-
+.btn{
+  position: fixed;
+  bottom: 80px;
+  right: 0;
+}
 </style>

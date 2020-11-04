@@ -1,11 +1,14 @@
 <!--  -->
 <template>
-<div class='list'>
+<div class='list' @click.stop="dl()">
+<div class="po"><img :src="srcImg" alt="">
+<span>{{username}}</span>
+</div>
 <van-nav-bar
   :title="name"
   left-text="返回"
   left-arrow
-  @click-left="onClickLeft"
+  @click-left.stop="onClickLeft"
 />
 
 
@@ -29,8 +32,6 @@
   :thumb="item.coverImg"
   :thumb-link="'/#/detail?id=' + item._id+'&name='+item.name"
 />
-
- 
 </van-list>
 </div>
 </template>
@@ -39,6 +40,7 @@
 //这里可以导入其他文件（比如：组件，工具js，第三方插件js，json文件，图片文件等等）
 //例如：import 《组件名称》 from '《组件路径》';
 import axios from "axios"
+import { loadUser } from "../services/carts";
 export default {
 //import引入的组件需要注入到对象中才能使用
 name:"List",
@@ -51,6 +53,8 @@ name:"",
 txt:"",
 unm:10,
 list:[],
+srcImg:'',
+username:'',
 loading: false,
 finished: false,
 };
@@ -67,19 +71,43 @@ computed: {
 watch: {},
 //方法集合
 methods: {
+
  /*  aaa(){
     console.log("A")
   }, */
+   /* 获取用户信息,查看用户有没有登录,如果登录了跳转到个人中心，没有的话跳转到登录页面*/
+   dl(){
+     if(localStorage.getItem("token")){
+       location.href="/#/mine"
+     }else{
+       location.href="/#/login"
+     }
+   },
+  /* 获取用户信息 //查看用户有没有登录*/
+ async userName(){
+    if(localStorage.getItem("token")){
+      const res = await loadUser();
+     //console.log(res);
+     this.srcImg='http://localhost:3009'+res.avatar
+     this.username=res.userName
+     //console.log(this.srcImg)     
+      }else{
+         this.srcImg="../assets/2.jpg"
+         this.username="登录"        
+      }
+ },
+ /* 获取数据 */
     wan(){
       axios.get("http://localhost:3009/api/v1/products?page="+this.index*10+"&per="+this.unm).then((res)=>{
-      console.log(res.data.products)
+      //console.log(res.data.products)
       this.list=res.data.products
-      console.log(this.list)  
+      //console.log(this.list)  
     })
     },
     onClickLeft(){
         window.history.go(-1)
     },
+    /* 加载数据 */
       onLoad() {
       // 异步更新数据
       // setTimeout 仅做示例，真实场景中一般为 ajax 请求     
@@ -119,8 +147,9 @@ methods: {
 created() {
     this.index=this.$route.query.id
     this.name=this.$route.query.name
-    console.log(this.index,this.name)
+    //console.log(this.index,this.name)
     this.wan()
+    this.userName()
 },
 //生命周期 - 挂载完成（可以访问DOM元素）
 mounted() {
@@ -174,5 +203,25 @@ h3{
   margin-left: 10px;
   margin-top: 10px;
   z-index: 100;
+}
+.po{
+  display: flex;
+  width: 80px;
+  align-items: center;
+  position: absolute;
+  z-index: 100;
+  top: 10px;
+  right: 0;
+}
+.po img{
+  display: block;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+.po span{
+  color: red;
+  font-size: 14px;
+  margin-left: 10px;
 }
 </style>

@@ -10,15 +10,21 @@ v-for="(item,i) in List"
   :title="item.name"
   :thumb="item.coverImg"
 >
+
   <template #tags>
-    <van-tag plain type="danger">{{List[i].fas}}</van-tag>
+    <van-tag plain type="danger">{{item.fas}}</van-tag>
     <van-tag plain type="danger">标签</van-tag>
   </template>
-  <template #footer>
-  <van-icon :name="List[i].cc" @click="showPopup(item._id,item.name,i)"   :class="List[i].fas?'bbb':'bbb'"/>
-    <van-button size="mini" @click="dele(list[i]._id,item.name)">删除</van-button>
+  <template #footer> 
+     <van-checkbox v-model="item.fas">单选</van-checkbox>
+     
+     <p class="jl"></p>
+    <van-button size="mini" @click="dele(list[i]._id,item.name,i)">删除</van-button>
   </template>
 </van-card>
+<van-submit-bar :price="3050" button-text="提交订单" @submit="onSubmit">
+  <van-checkbox v-model="checked">全选</van-checkbox>
+</van-submit-bar>
 </div>
 </template>
 
@@ -26,9 +32,10 @@ v-for="(item,i) in List"
 //这里可以导入其他文件（比如：组件，工具js，第三方插件js，json文件，图片文件等等）
 //例如：import 《组件名称》 from '《组件路径》';
 //import axios from "axios"
+import { Dialog } from 'vant'
 import { loadCarts } from "../services/carts";
 import { detCarts } from "../services/carts";
-//import { Toast } from 'vant'
+import { Toast } from 'vant'
 
 export default {
 //import引入的组件需要注入到对象中才能使用
@@ -42,6 +49,8 @@ return {
     name:'',
     fas:true,
     cc:"star-o",
+    show: false,
+    checked:true,
 };
 },
 //监听属性 类似于data概念
@@ -50,6 +59,9 @@ computed: {},
 watch: {},
 //方法集合
 methods: {
+    onSubmit(){
+
+    },
     //没啥用
       showPopup(id,name,i) {
     //console.log(id,name,fase,i)
@@ -62,10 +74,29 @@ methods: {
       this.List[i].fas=!this.List[i].fas
 
     },
+    /* 删除数据 */
+     dele(id,name,i){
+        Dialog.confirm({
+        title: '确认删除吗!',
+        })
+        .then(() => {
+           localStorage.removeItem(name)
+           const res =  detCarts(id);
+          console.log(res);
+          this.List.splice(i,1)
+          Toast.success('删除成功！');
+        })
+        .catch(() => {
+           
+       });
+    },
     //去购物车数据
    async quList(){
        const res = await loadCarts();
        this.list=res
+       this.list.forEach((item)=>{
+           item.fas=true
+       })
        res.forEach((item)=>{
            item.product.fas=true
            item.product.cc="star"
@@ -76,13 +107,15 @@ methods: {
       console.log(this.list,this.List);
   },
   //删除购物车
-   async dele(id,name){
-       console.log(name)
-       localStorage.removeItem(name)
-       const res = await detCarts(id);
-      console.log(res);
-       location.reload()
-  }
+  /*  async dele(id,name,i){
+       if (confirm("是否确认删除此项?")){                   
+           localStorage.removeItem(name)
+           const res = await detCarts(id);
+          console.log(res);
+          this.List.splice(i,1)
+                }
+       //location.reload()
+  } */
 },
 //生命周期 - 创建完成（可以访问当前this实例）
 created() {
@@ -119,6 +152,7 @@ color: orange;
   color: red;
 }
 .van-card__footer{
+    margin-top: 10px;
     display: flex;
     align-items: center;
     align-content: flex-end;
@@ -126,8 +160,29 @@ color: orange;
 }
 .van-icon{
   font-size: 22px;
- /* color: orange; */
   margin-right: 10px;
-  margin-left: 270px;
+  margin-left: 240px;
 }
+.jl{
+    width: 240px;
+}
+.van-button{
+   
+    width: 40px;
+    color: white;
+    background: red;
+}
+.van-submit-bar__bar{
+    width: 90%;
+    position: fixed;
+    bottom: 50px;
+}
+.van-button--danger{
+    width: 100px;
+    height: 30px;
+}
+/* .van-submit-bar__text{
+    width: 100px;
+    height: 50px;
+} */
 </style>
