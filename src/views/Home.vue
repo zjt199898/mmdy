@@ -158,4 +158,10 @@ h3 {
   color: red;
    border-bottom: 2px solid blue;
 }
+.van-card__title{
+  color: red;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
 </style>

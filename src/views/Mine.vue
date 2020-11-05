@@ -59,4 +59,8 @@ export default {
 };
 </script>
 <style  scoped>
+.mine{
+  background: url(../assets/timg.gif) no-repeat ;
+  background-size: 100% 100%;
+}
 </style>

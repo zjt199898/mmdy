@@ -23,12 +23,16 @@
   void-color="#eee"
 />
 </div>
+<van-divider />
 <div class="cent">
 <span>{{item.name}}</span>
 <van-icon :name="cc" @click="fas?showPopup(item._id,item.name,i):dele(List[i]._id,i)"    :class="fas?'aaa':'bbb'"/>
 
 </div>
-<div >&nbsp;&nbsp;&nbsp;{{item.descriptions}}</div>
+<van-divider />
+<div class="divider">简介:</div>
+<van-divider />
+<div class="nr">{{item.descriptions}}</div>
 </div>
 </div>
 </template>
@@ -212,8 +216,10 @@ color: orange;
   font-weight: bold;
   color: red;
 }
-div{
-  color: green;
+.divider{
+  font-size: 20px;
+  font-weight: bold;
+  color: fuchsia;
 }
 .van-nav-bar{
     width: 100%;
@@ -259,4 +265,10 @@ div{
   font-size: 14px;
   margin-left: 10px;
 }
+/* .nr span{
+  display: block;
+  width: 10px;
+  height: 10px;
+} */
+
 </style>

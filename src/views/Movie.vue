@@ -16,14 +16,14 @@ v-for="(item,i) in List"
     <van-tag plain type="danger">标签</van-tag>
   </template>
   <template #footer> 
-     <van-checkbox v-model="item.fas">单选</van-checkbox>
+     <van-checkbox v-model="list[i].fas">单选</van-checkbox>
      
      <p class="jl"></p>
     <van-button size="mini" @click="dele(list[i]._id,item.name,i)">删除</van-button>
   </template>
 </van-card>
-<van-submit-bar :price="3050" button-text="提交订单" @submit="onSubmit">
-  <van-checkbox v-model="checked">全选</van-checkbox>
+<van-submit-bar :price="sumPrice" button-text="提交订单" @submit="onSubmit">
+  <van-checkbox v-model="checkAll">全选</van-checkbox>
 </van-submit-bar>
 </div>
 </template>
@@ -54,7 +54,30 @@ return {
 };
 },
 //监听属性 类似于data概念
-computed: {},
+computed: {
+    /* 全选和复选 */
+     checkAll: {
+            
+            // 手动改变当前数据之后触发set方法
+            set(v) {
+                console.log(v)
+              this.list.forEach((item) => (item.fas = v));
+              console.log(this.List)
+            },
+            // 当依赖的数据改变之后触发
+            get() {
+              return (
+                this.list.length ==
+                this.list.filter((item) => item.fas).length
+              );
+            },
+          },
+          sumPrice() {
+            return this.list
+              .filter((item) => item.fas) // 过滤当前选中的数据
+              .reduce((pre) => pre + 3900, 0); // 求和
+          },
+},
 //监控data中的数据变化
 watch: {},
 //方法集合
@@ -62,7 +85,7 @@ methods: {
     onSubmit(){
 
     },
-    //没啥用
+/*     //没啥用
       showPopup(id,name,i) {
     //console.log(id,name,fase,i)
     console.log(this.List[i].fas,this.List[i].cc)
@@ -73,7 +96,7 @@ methods: {
      }
       this.List[i].fas=!this.List[i].fas
 
-    },
+    }, */
     /* 删除数据 */
      dele(id,name,i){
         Dialog.confirm({
@@ -84,6 +107,7 @@ methods: {
            const res =  detCarts(id);
           console.log(res);
           this.List.splice(i,1)
+          this.list.splice(i,1)
           Toast.success('删除成功！');
         })
         .catch(() => {
@@ -93,15 +117,18 @@ methods: {
     //去购物车数据
    async quList(){
        const res = await loadCarts();
-       this.list=res
-       this.list.forEach((item)=>{
-           item.fas=true
+       /* 添加一个属性为true,为复选框选中状态 */
+       this.list=res.map((item)=>{
+           return {...item, fas:true}
        })
        res.forEach((item)=>{
-           item.product.fas=true
+           //item.product.fas=true
            item.product.cc="star"
            this.List.push(item.product)
        })
+       /* this.List=res.forEach((item)=>{
+           return {...item, fas:true}
+       }) */
        this.List.reverse()
        this.list.reverse()
       console.log(this.list,this.List);
@@ -139,6 +166,9 @@ activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
 }
 </script>
 <style  scoped>
+.movie{
+    padding-bottom: 50px;
+}
 h4{
     width: 100%;
     text-align: center;
@@ -176,11 +206,13 @@ color: orange;
     width: 90%;
     position: fixed;
     bottom: 50px;
+    background: white;
 }
 .van-button--danger{
     width: 100px;
     height: 30px;
 }
+
 /* .van-submit-bar__text{
     width: 100px;
     height: 50px;

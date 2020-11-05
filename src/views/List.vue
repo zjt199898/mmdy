@@ -78,9 +78,9 @@ methods: {
    /* 获取用户信息,查看用户有没有登录,如果登录了跳转到个人中心，没有的话跳转到登录页面*/
    dl(){
      if(localStorage.getItem("token")){
-       location.href="/#/mine"
+       //location.href="/#/mine"
      }else{
-       location.href="/#/login"
+       //location.href="/#/login"
      }
    },
   /* 获取用户信息 //查看用户有没有登录*/
@@ -223,5 +223,11 @@ h3{
   color: red;
   font-size: 14px;
   margin-left: 10px;
+}
+.van-card__title{
+  color: red;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 </style>
