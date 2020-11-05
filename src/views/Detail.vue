@@ -1,45 +1,40 @@
 <!--  -->
 <template>
-  <div class="deta" @click.self="dl()">
-    <div class="po">
-      <img :src="srcImg" alt="" />
-      <span>{{ username }}</span>
-    </div>
-    <div v-for="(item, i) in list" :key="item._id">
-      <van-nav-bar
-        :title="item.content"
-        left-text="返回"
-        left-arrow
-        @click-left="onClickLeft"
-      />
-      <img :src="item.coverImg" alt="" />
-      <div class="pin">
-        <van-col span="1"></van-col>
-        <span>评分：</span>
-        <van-rate
-          v-model="value"
-          :size="25"
-          color="#ffd21e"
-          void-icon="star"
-          void-color="#eee"
-        />
-      </div>
-      <div class="cent">
-        <span>{{ item.name }}</span>
-        <van-icon
-          :name="cc"
-          @click="
-            fas ? showPopup(item._id, item.name, i) : dele(List[i]._id, i)
-          "
-          :class="fas ? 'aaa' : 'bbb'"
-        />
-      </div>
-      <van-col span="1"></van-col>
-      <van-col span="19">
-        <div>{{ item.descriptions }}</div>
-      </van-col>
-    </div>
-  </div>
+<div class='deta'  @click.self="dl()">
+<div class="po"><img :src="srcImg" alt="">
+<span>{{username}}</span>
+</div>
+<div  v-for="(item,i) in list"
+:key="item._id">
+<van-nav-bar
+  :title="item.name"
+  left-text="返回"
+  left-arrow
+  @click-left="onClickLeft"
+/>
+<img :src="item.coverImg" alt="">
+<div class="pin">
+<span>评分：</span>
+<van-rate
+  v-model="value"
+  :size="25"
+  color="#ffd21e"
+  void-icon="star"
+  void-color="#eee"
+/>
+</div>
+<van-divider />
+<div class="cent">
+<span>{{item.name}}</span>
+<van-icon :name="cc" @click="fas?showPopup(item._id,item.name,i):dele(List[i]._id,i)"    :class="fas?'aaa':'bbb'"/>
+
+</div>
+<van-divider />
+<div class="divider">简介:</div>
+<van-divider />
+<div class="nr">{{item.descriptions}}</div>
+</div>
+</div>
 </template>
 
 <script>
@@ -224,8 +219,10 @@ img {
   font-weight: bold;
   color: red;
 }
-div {
-  color: green;
+.divider{
+  font-size: 20px;
+  font-weight: bold;
+  color: fuchsia;
 }
 .van-nav-bar {
   width: 100%;
@@ -271,4 +268,10 @@ div {
   font-size: 14px;
   margin-left: 10px;
 }
+/* .nr span{
+  display: block;
+  width: 10px;
+  height: 10px;
+} */
+
 </style>
