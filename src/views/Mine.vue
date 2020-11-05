@@ -1,13 +1,16 @@
 <!--  -->
 <template>
   <div class="mine">
-    我的
-    <hr />
-    <van-image round width="4rem" height="4rem" :src="picture" />
-    <hr />
-    <router-link :to="{ name: 'ChangeLogin' }">修改个人资料</router-link>
-    <hr />
-    <button @click="loginOut">退出登录</button>
+    <div class="header">
+      <van-col span="2"></van-col>
+      <van-image round width="4rem" height="4rem" :src="picture" class="" />
+      <van-col span="8" offset="2" :style="{ color: '#ffff' }">{{nickName}}</van-col>
+    </div>
+    <van-cell title="修改个人资料" is-link :to="{ name: 'ChangeLogin' }" />
+    <van-cell title="修改个人密码" is-link :to="{ name: 'ChangePass' }" />
+    <div class="bottom" style="flex: 1">
+      <van-button type="primary" round @click="loginOut" color="linear-gradient(to right, #ff6034, #ee0a24)">退出登录</van-button>
+    </div>
   </div>
 </template>
 
@@ -25,6 +28,7 @@ export default {
     //这里存放数据
     return {
       picture: "",
+      nickName:''
     };
   },
   //监听属性 类似于data概念
@@ -34,7 +38,6 @@ export default {
   //方法集合
   methods: {
     loginOut() {
-      localStorage.removeItem("token")
       console.log(localStorage.getItem("token"));
       this.$router.push({ name: "Login" });
     },
@@ -44,6 +47,7 @@ export default {
     get("/api/v1/users/info").then((res) => {
       console.log(res);
       this.picture = "http://localhost:3009" + res.avatar;
+      this.nickName = res.nickName;
       console.log(this.picture);
     });
   },
@@ -59,8 +63,19 @@ export default {
 };
 </script>
 <style  scoped>
-.mine{
-  background: url(../assets/timg.gif) no-repeat ;
-  background-size: 100% 100%;
+.mine {
+  display: flex;
+  flex-direction: column;
+}
+.header {
+  height: 180px;
+  display: flex;
+  align-items: center;
+  background-color: orangered;
+}
+.bottom {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: center;
 }
 </style>

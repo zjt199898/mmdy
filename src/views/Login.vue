@@ -1,7 +1,12 @@
 <template>
   <div class="login">
     <div class="img">
-      <van-image round width="6rem" height="6rem" :src="picture" />
+      <div v-if="r">
+          <van-image round width="6rem" height="6rem" src="https://img.yzcdn.cn/vant/cat.jpeg"/>
+      </div>
+      <div v-else>
+          <van-image round width="6rem" height="6rem" :src="picture" />
+      </div>
     </div>
     <van-form @submit="onSubmit">
       <van-field
@@ -20,14 +25,21 @@
         :rules="[{ required: true, message: '请填写密码' }]"
       />
       <div style="margin: 16px">
-        <van-button round block type="info" native-type="submit" color="#FF0000" size="20rem">
+        <van-button
+          round
+          block
+          type="info"
+          native-type="submit"
+          color="#FF0000"
+          size="20rem"
+        >
           登录
         </van-button>
       </div>
     </van-form>
     <div class="age">
       <div class="age-left">
-        <router-link></router-link>
+        <!-- <router-link></router-link> -->
       </div>
       <div class="age-right">
         <router-link :to="{ name: 'Reg' }">免费注册</router-link>
@@ -47,6 +59,7 @@ export default {
       username: "",
       password: "",
       picture: "",
+      r:true,
     };
   },
   methods: {
@@ -73,10 +86,13 @@ export default {
   },
   created() {
     get("/api/v1/users/info").then((res) => {
-      console.log(res);
       this.picture = "http://localhost:3009" + res.avatar;
-      localStorage.setItem("userName",JSON.stringify(res.userName));
-      localStorage.setItem("avatar",JSON.stringify(res.avatar));
+      console.log(res);
+      localStorage.setItem("avatar", res.avatar);
+      localStorage.setItem("userName", res.userName);
+      localStorage.setItem("passward", res.password);
+      localStorage.setItem("nickName", res.nickName);
+      this.r=false;
     });
   },
 };

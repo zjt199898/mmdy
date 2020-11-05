@@ -2,28 +2,31 @@
   <div class="login">
     <van-form @submit="onSubmit">
       <van-row gutter="20">
-        <van-col span="9"></van-col>
-        <van-uploader
-          :after-read="afterRead"
-          v-model="img"
-          :max-count="1"
-          multiple
-        />
+        <van-col span="8"></van-col>
+        <div v-if="r">
+          <van-image
+            width="5rem"
+            height="5rem"
+            :src="picture"
+            @click="loginOut"
+          />
+        </div>
+        <div v-else>
+          <van-uploader
+            :after-read="afterRead"
+            v-model="img"
+            :max-count="1"
+            multiple
+          />
+        </div>
+        <van-col span="8"></van-col>
       </van-row>
       <van-field
-        v-model="username"
-        name="用户名"
-        label="用户名"
-        placeholder="用户名"
-        :rules="[{ required: true, message: '请修改用户名' }]"
-      />
-      <van-field
-        v-model="password"
-        type="password"
-        name="密码"
-        label="密码"
-        placeholder="密码"
-        :rules="[{ required: true, message: '请修改密码' }]"
+        v-model="nickName"
+        name="昵称"
+        label="昵称"
+        placeholder="昵称"
+        :rules="[{ required: true, message: '请填写用昵称', trigger: 'blur' }]"
       />
       <div style="margin: 16px">
         <van-button
@@ -33,34 +36,46 @@
           native-type="submit"
           color="#FF0000"
           size="20rem"
+          @click="nn"
         >
           修改完成
         </van-button>
       </div>
     </van-form>
     <div class="age">
-      <div class="age-right">
-
-      </div>
+      <div class="age-right"></div>
     </div>
   </div>
 </template>
 
 <script>
-import { Notify } from "vant";
+import { post } from "../untils/request";
+import { get } from "../untils/request";
 import axios from "axios";
-import { regApi } from "../untils/auth";
+import { Toast } from "vant";
+
 export default {
   name: "ChangeLogin",
   data() {
     return {
       username: "",
       password: "",
+      nickName: "",
       avatar: "",
       img: [],
+      picture: "",
+      r: true,
     };
   },
   methods: {
+    //获取头像和昵称
+    nn() {
+      get("/api/v1/users/info").then((res) => {
+        this.picture = "http://localhost:3009" + res.avatar;
+        this.nickName = res.nickName;
+      });
+    },
+    //修改头像
     afterRead(file) {
       // 此时可以自行将文件上传至服务器
       console.log(file);
@@ -76,29 +91,30 @@ export default {
           ];
         });
     },
-    async onSubmit() {
-      const result = await regApi({
-        userName: this.username,
-        password: this.password,
+    //修改昵称
+    onSubmit() {
+      post("/api/v1/users/change_info", {
+        nickName: this.nickName,
         avatar: this.avatar,
+      }).then((res) => {
+        console.log(res);
+        if (res.code == "success") {
+          Toast.success("修改成功");
+          this.$router.push({ name: "Mine" });
+        } else {
+          Toast.fail("请继续修改");
+        }
       });
-      if (result.code === "success") {
-        console.log(result.code);
-        localStorage.setItem("token", result.token);
-        this.$router.push({
-          name: "Mine",
-        });
-      } else {
-        Notify({
-          type: "danger",
-          message: "result.message",
-        });
-      }
     },
+    loginOut() {
+      this.r = !this.r;
+    },
+  },
+  created() {
+    this.nn();
   },
 };
 </script>
-
 <style>
 .login {
   display: flex;

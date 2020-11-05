@@ -161,8 +161,8 @@ methods: {
 created() {
   this.id=this.$route.query.id
   this.Name=this.$route.query.name
-  //console.log(this.id,this.Name)
-  //console.log(localStorage.getItem(this.Name))
+  console.log(this.id,this.Name)
+  console.log(localStorage.getItem(this.Name))
   this.dataList()
   this.quList()
   this.userName()

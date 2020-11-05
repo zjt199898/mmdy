@@ -58,6 +58,7 @@ instance.interceptors.response.use(
 //     )
 // }
 export const get = (url, params) => instance.get(url, { params });
+//  export const post =(url,data)=>instance.post(url,data)
 export function post(url, data) {
     return instance.post(url,
         data, //params:params

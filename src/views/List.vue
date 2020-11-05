@@ -228,6 +228,5 @@ h3{
   color: red;
   font-size: 16px;
   font-weight: bold;
-  margin-bottom: 10px;
 }
 </style>
