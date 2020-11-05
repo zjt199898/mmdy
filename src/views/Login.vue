@@ -2,10 +2,15 @@
   <div class="login">
     <div class="img">
       <div v-if="r">
-          <van-image round width="6rem" height="6rem" src="https://img.yzcdn.cn/vant/cat.jpeg"/>
+        <van-image
+          round
+          width="5rem"
+          height="5rem"
+          src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3596061076,1008030859&fm=26&gp=0.jpg"
+        />
       </div>
       <div v-else>
-          <van-image round width="6rem" height="6rem" :src="picture" />
+        <van-image round width="6rem" height="6rem" :src="picture" />
       </div>
     </div>
     <van-form @submit="onSubmit">
@@ -13,7 +18,7 @@
         v-model="username"
         name="用户名"
         label="用户名"
-        placeholder="用户名"
+        placeholder="手机号/用户名/邮箱"
         :rules="[{ required: true, message: '请填写用户名' }]"
       />
       <van-field
@@ -21,7 +26,7 @@
         type="password"
         name="密码"
         label="密码"
-        placeholder="密码"
+        placeholder="请输入登录密码"
         :rules="[{ required: true, message: '请填写密码' }]"
       />
       <div style="margin: 16px">
@@ -30,7 +35,7 @@
           block
           type="info"
           native-type="submit"
-          color="#FF0000"
+          color="#ff3333"
           size="20rem"
         >
           登录
@@ -39,7 +44,7 @@
     </van-form>
     <div class="age">
       <div class="age-left">
-        <!-- <router-link></router-link> -->
+        <router-link  :to="{ name: 'Reg' }">短信登录验证</router-link>
       </div>
       <div class="age-right">
         <router-link :to="{ name: 'Reg' }">免费注册</router-link>
@@ -59,7 +64,7 @@ export default {
       username: "",
       password: "",
       picture: "",
-      r:true,
+      r: true,
     };
   },
   methods: {
@@ -92,7 +97,7 @@ export default {
       localStorage.setItem("userName", res.userName);
       localStorage.setItem("passward", res.password);
       localStorage.setItem("nickName", res.nickName);
-      this.r=false;
+      this.r = false;
     });
   },
 };
@@ -110,4 +115,5 @@ export default {
   display: flex;
   justify-content: space-around;
 }
+
 </style>

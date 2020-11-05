@@ -1,8 +1,10 @@
 # 111
 
-## Project setup 1111
+## Project setup 
 ```
 npm install
+
+npm i 
 ```
 
 ### Compiles and hot-reloads for development
@@ -22,3 +24,5 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+秋梦牵月引群星

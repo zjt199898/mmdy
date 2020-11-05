@@ -9,7 +9,7 @@
     <van-cell title="修改个人资料" is-link :to="{ name: 'ChangeLogin' }" />
     <van-cell title="修改个人密码" is-link :to="{ name: 'ChangePass' }" />
     <div class="bottom" style="flex: 1">
-      <van-button type="primary" round @click="loginOut" color="linear-gradient(to right, #ff6034, #ee0a24)">退出登录</van-button>
+      <van-button type="primary" round @click="loginOut" color="linear-gradient(to right, #ff9999, #ee0a24)">退出登录</van-button>
     </div>
   </div>
 </template>
@@ -71,7 +71,7 @@ export default {
   height: 180px;
   display: flex;
   align-items: center;
-  background-color: orangered;
+  background-color: #ff6666;
 }
 .bottom {
   display: flex;

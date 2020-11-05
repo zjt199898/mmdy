@@ -64,7 +64,6 @@ export default {
         });
     },
     adddy() {
-      
       axios
         .get(
           "https://pcw-api.iqiyi.com/search/recommend/list?channel_id=1&data_type=1&mode=11&page_id=1&ret_num=30"

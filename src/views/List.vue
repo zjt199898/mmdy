@@ -1,6 +1,6 @@
 <!--  -->
 <template>
-  <div class="list" @click.stop="dl()">
+  <div class="list" @click="userName()">
     <div class="po">
       <img :src="srcImg" alt="" />
       <span>{{ username }}</span>
@@ -11,10 +11,9 @@
       left-arrow
       @click-left.stop="onClickLeft"
     />
-
-    <div class="ten">
-      <input type="text" class="txt" placeholder="请输入电影名" v-model="txt" />
-    </div>
+      <div class="ten">
+          <input type="text" class="txt" placeholder="请输入电影名" v-model="txt"/>
+      </div>  
 
     <van-list
       v-model="loading"
@@ -40,6 +39,8 @@
 //例如：import 《组件名称》 from '《组件路径》';
 import axios from "axios";
 import { loadUser } from "../services/carts";
+// import { Toast } from "vant";
+
 export default {
   //import引入的组件需要注入到对象中才能使用
   name: "List",
@@ -49,7 +50,7 @@ export default {
     return {
       index: "",
       name: "",
-      txt: "",
+      txt:"",
       unm: 10,
       list: [],
       srcImg: "",
@@ -79,6 +80,7 @@ export default {
     //     location.href = "/#/login";
     //   }
     // },
+
     /* 获取用户信息 //查看用户有没有登录*/
     async userName() {
       if (localStorage.getItem("token")) {
@@ -102,9 +104,8 @@ export default {
             this.unm
         )
         .then((res) => {
-          //console.log(res.data.products)
           this.list = res.data.products;
-          //console.log(this.list)
+          console.log(this.list);
         });
     },
     onClickLeft() {
